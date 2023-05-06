@@ -1,0 +1,16 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled dynamic-link libraries (DLL)
+*.dll
+
+# Executable files
+*.exe
+
+# Generated files by the compiler
+*.ilk
+*.pdb
+
+# Visual Studio Code specific files
+.vscode/
