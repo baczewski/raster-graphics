@@ -6,6 +6,9 @@
 #include <exception>
 
 class Pixel {
+private: 
+  static const unsgined char MAX_VALUE = 255;
+
 public:
   virtual void print() const = 0; // Pure virtual function
 
