@@ -6,8 +6,8 @@
 #include <exception>
 
 class Pixel {
-private: 
-  static const unsgined char MAX_VALUE = 255;
+protected: 
+  static const unsigned char MAX_VALUE;
 
 public:
   virtual void print() const = 0; // Pure virtual function
@@ -29,7 +29,7 @@ private:
   unsigned char blue;
   
 public:
-  RGBPixel(unsigned char r, unsigned char g, unsigned char b, const unsigned char maxVal = 255);
+  RGBPixel(unsigned char r, unsigned char g, unsigned char b, const unsigned char maxVal);
 
   void setRed(unsigned char r, const unsigned char maxVal);
   void setGreen(unsigned char g, const unsigned char maxVal);
@@ -45,7 +45,7 @@ private:
   unsigned char intensity;
   
 public:
-  GrayPixel(unsigned char i, const unsigned char maxVal = 255);
+  GrayPixel(unsigned char i, const unsigned char maxVal);
 
   void setIntensity(unsigned char i, const unsigned char maxVal);
 

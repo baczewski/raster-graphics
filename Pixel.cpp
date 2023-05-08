@@ -1,8 +1,12 @@
 #include "Pixel.h"
 
+// Pixel
+
+const unsigned char Pixel::MAX_VALUE = 255;
+
 // RGBPixel
 
-RGBPixel::RGBPixel(unsigned char r, unsigned char g, unsigned char b, const unsigned char maxVal) {
+RGBPixel::RGBPixel(unsigned char r, unsigned char g, unsigned char b, const unsigned char maxVal = MAX_VALUE) {
     try {
         setRed(r, maxVal);
         setGreen(g, maxVal);
@@ -67,7 +71,7 @@ std::ostream& RGBPixel::operator<<(std::ostream& os) const {
 
 // GrayscalePixel
 
-GrayPixel::GrayPixel(unsigned char i, const unsigned char maxVal) {
+GrayPixel::GrayPixel(unsigned char i, const unsigned char maxVal = MAX_VALUE) {
     try {
         setIntensity(i, maxVal);
     } catch (std::out_of_range& e) {
