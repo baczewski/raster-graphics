@@ -62,6 +62,6 @@ After running the executable, you will be prompted to enter a command. The follo
 ## Contributors 🤝
 
 - Alex Hristov
-- Ionna Aneva
+- Ioana Aneva
 - Martin Marinov
 - Bobi Bonev
