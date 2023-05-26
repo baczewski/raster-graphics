@@ -4,11 +4,15 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <sstream>
+#include <chrono>
 using std::vector;
 using std::string;
+using std::ifstream;
+using std::cerr;
 
 enum class Type {
-    invalid,
+    Invalid,
     P1,
     P2,
     P3
@@ -18,24 +22,39 @@ class Picture {
 private:
     string name;
     Type type;
-    short maxValue;
+    struct Size {
+        int width;
+        int height;
+    } size;
+    unsigned char maxValue;
     vector<vector<Pixel*>> pixels;
-    vector<string> transformation;
+    vector<string> transformations;
 
+    struct DateTime {
+        static const string& getDateTime();
+    };
+
+    void setName(const string& name);
+    Type setType(const string& type);
+    void setSize(const string& size);
+    void setP1(ifstream& read);
+    void setP2(ifstream& read);
+    void setP3(ifstream& read);
+    
+    bool isComment(const string& line) const;
+    const string& typeToString() const;
+
+    void executeTransformations();
 public:
 
-    Picture(const string& filename) {
-        // Read the file
-        // Check if the file is valid
-        // If it is valid, read the file and create the picture
-        // If it is not valid, throw an exception and free the memory allocated for the pixels
-        // with:  throw std::runtime_error("Some message");
-    }
+    Picture(const string& filename);
+    ~Picture();
 
-    ~Picture() {
-        // Free the memory allocated for the pixels
-    }
+    void addTransformation(const string& transformation);
+    void undoTransformation();
+    void clearTransformations();
 
+    void save() const;
 };
 
 
