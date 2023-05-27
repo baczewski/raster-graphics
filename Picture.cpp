@@ -242,6 +242,31 @@ const string& Picture::DateTime::getDateTime() {
     return dateTimeString;
 }
 
+vector<vector<Pixel*>> Picture::getPixels() const {
+    // make a copy of the pixels as now if we return pixels it will still point at the same location in memory
+    vector<vector<Pixel*>> copyPixels;
+    for(vector<Pixel*> row : pixels) {
+        vector<Pixel*> copyRow;
+        for(Pixel* pixel : row) {
+            copyRow.push_back(pixel->clone());
+        }
+        copyPixels.push_back(copyRow);
+    }
+}
+
+vector<string> Picture::getTransformations() const {
+    return transformations;
+}
+
+void Picture::print() const {
+    for(vector<Pixel*> row : pixels) {
+        for(Pixel* pixel : row) {
+            pixel->print();
+        }
+        std::cout << '\n';
+    }
+}
+
 void Picture::save() const {
 
     if(type == Type::Invalid){

@@ -54,6 +54,10 @@ public:
     void undoTransformation();
     void clearTransformations();
 
+    vector<vector<Pixel*>> getPixels() const;
+    vector<string> getTransformations() const;
+
+    void print() const;
     void save() const;
 };
 
