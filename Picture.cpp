@@ -258,6 +258,10 @@ vector<string> Picture::getTransformations() const {
     return transformations;
 }
 
+const Type& Picture::getType() const {
+    return type;
+}
+
 void Picture::print() const {
     for(vector<Pixel*> row : pixels) {
         for(Pixel* pixel : row) {
