@@ -262,6 +262,10 @@ const Type& Picture::getType() const {
     return type;
 }
 
+const string& Picture::getName() const {
+    return name;
+}
+
 void Picture::print() const {
     for(vector<Pixel*> row : pixels) {
         for(Pixel* pixel : row) {
