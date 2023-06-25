@@ -57,6 +57,7 @@ public:
     vector<vector<Pixel*>> getPixels() const;
     vector<string> getTransformations() const;
     const Type& getType() const;
+    const string& getName() const;
 
     void print() const;
     void save() const;
