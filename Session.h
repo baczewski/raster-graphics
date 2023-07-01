@@ -20,7 +20,8 @@ public:
     void optimizeTransformations();
     void addNewPictures(const vector<string>& picturePath);
     void undoLastTransformation();
-    void savePictures(const string& path) const;
+    void savePictures(const string& path);
+    void clearPicturesTransformations();
 
     const string& getSessionInfo() const;
 };

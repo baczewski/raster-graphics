@@ -33,7 +33,13 @@ void Session::applyTransformationsToPictures(){
 
 void Session::addNewPictures(const vector<string>& picturePaths){
     for(int i = 0; i < picturePaths.size(); ++i){
-        Picture newPicture(picturePaths[i]);
+        // Picture newPicture;
+        // try{
+            Picture newPicture(picturePaths[i]);
+        // }catch(...){
+            // std::cout << "\nInvalid image, won't be added to the session!\n";
+            // return;
+        // }
         sessionPictures.push_back(newPicture);
     }
 }
@@ -72,10 +78,11 @@ void Session::undoLastTransformation(){
     }
 }
 
-void Session::savePictures(const string& path) const{
+void Session::savePictures(const string& path){
     for(Picture picture : sessionPictures){
         picture.save();
     }
+    clearPicturesTransformations();
 }
 
 const string& Session::getSessionInfo() const{
@@ -89,6 +96,12 @@ const string& Session::getSessionInfo() const{
     }
     infoText += '\n';
     return infoText;
+}
+
+void Session::clearPicturesTransformations(){
+    for(Picture picture : sessionPictures){
+        picture.clearTransformations();
+    }
 }
 
 bool canBeApplied(const string& transformation, const Picture& picture){

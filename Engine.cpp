@@ -1,10 +1,25 @@
 #include "Engine.h"
-
+Engine* Engine::instance = nullptr;
 vector<Session> Engine::sessions = vector<Session>();
 Session* Engine::currentSession = nullptr;
+const vector<string> Engine::commands = vector<string>{"help", "save", "saveas", "load", "add", "switch", 
+                                                        "monochrome", "grayscale", "negative", "rotate", 
+                                                        "flip", "undo", "crop", "session info", "exit"};
+
 
 void tokenizeCommand(vector<string>&, const std::string&);
 void toLowerCase(const string&);
+bool isInVector(const string&, const vector<string>&);
+const vector<string> getValidPicturePaths(const vector<string>&);
+bool isInNetpbmFormat(const string&);
+bool isValidFilename(const string&);
+
+Engine* Engine::getInstance(){
+    if(instance == nullptr){
+        instance = new Engine();
+    }
+    return instance;
+}
 
 void Engine::addNewSession(const vector<string>& picturePaths){
     Session newSession(picturePaths);
@@ -23,7 +38,7 @@ void Engine::switchTo(int sessionID){
 }
 
 void Engine::run(){
-    std::cout << "\n| Welcome to raster image editor! |\n---------------------------------";
+    std::cout << "\n| Welcome to raster image editor! |\n------------------------------------";
     while(true){
         std::cout << "\nEnter your command (type help for the list of commands):\n";
         try{
@@ -48,6 +63,17 @@ void Engine::callCommand(){
     else if(command[0] == "load"){
         Commands::loadSession(command);
     }
+    else if(command[0] == "exit"){
+        Commands::exit(command);
+    }
+    else if(command[0] != "help" && 
+            command[0] != "load" &&  
+            isInVector(command[0], commands)){
+                if(currentSession == nullptr){
+                    std::cout << "\nError! You must load a session first!\n";
+                    return;
+                }
+    }
     else if(command[0] == "save"){
         Commands::savePictures(command);
     }
@@ -61,7 +87,7 @@ void Engine::callCommand(){
         Commands::switchToSession(command);
     }
     else if(command[0] == "monochrome" ||
-            command[0] == "greyscale" ||
+            command[0] == "grayscale" ||
             command[0] == "negative"){
         Commands::addFilterToPictures(command);           
     }
@@ -80,9 +106,6 @@ void Engine::callCommand(){
     else if(command[0] == "session"){
         Commands::displaySessionInfo(command);
     }
-    else if(command[0] == "exit"){
-        Commands::exit(command);
-    }
     else{
         std::cout << "\nUnrecognized command! Type help for the list of commands!\n";
     }
@@ -94,7 +117,8 @@ void Engine::Commands::loadSession(vector<string> command){
         return;
     }
     vector<string> picturePaths(&command[1], &command[command.size()]);
-    Engine::addNewSession(picturePaths);
+    vector<string> validPicturePaths = getValidPicturePaths(picturePaths);
+    Engine::addNewSession(validPicturePaths);
 }
 
 void Engine::Commands::savePictures(vector<string> command){
@@ -124,7 +148,8 @@ void Engine::Commands::addPictureToSession(vector<string> command){
         return;
     }
     vector<string> paths(&command[1], &command[command.size()]);
-    currentSession->addNewPictures(paths);
+    vector<string> validPaths = getValidPicturePaths(paths);
+    currentSession->addNewPictures(validPaths);
 }
 
 void Engine::Commands::switchToSession(vector<string> command){
@@ -144,7 +169,7 @@ void Engine::Commands::switchToSession(vector<string> command){
 
 void Engine::Commands::addFilterToPictures(vector<string> command){
     if(command.size() != 1){
-        std::cout << "\nInvalid command! Do you mean 'greyscale'/'monochrome'/'negative'\n";
+        std::cout << "\nInvalid command! Do you mean 'grayscale'/'monochrome'/'negative'\n";
         return;
     }
     currentSession->addTransformationInfoToPictures(command[0]);
@@ -175,7 +200,9 @@ void Engine::Commands::cropPictures(vector<string> command){
         std::cout << "\nInvalid parameters for crop command! You should specify coordinates, width and height\n";
         return;
     }
-    // crop directly
+    string cropWithParams = command[0] + " " + command[1] + " " + command[2] + " " + command[3] + " " + command[4];
+    std::cout << cropWithParams << std::endl;
+    currentSession->addTransformationInfoToPictures(cropWithParams);
 }
 
 void Engine::Commands::undoTransformation(vector<string> command){
@@ -214,7 +241,7 @@ void Engine::Commands::help(vector<string> command){
     "saveas <path> - saves the images at the specified directory\n" <<
     "add <image1 image2 image3 ...> - adds new pictures to the current session" <<
     "switch <session ID> - switches to another session\n" <<
-    "greyscale - applies greyscale filter to the images in the current session" <<
+    "grayscale - applies grayscale filter to the images in the current session" <<
     "monochrome - applies black and white filter to the images in the current session" <<
     "negative - inverts the colors of the images in the current session" <<
     "rotate left - rotates the images from the current session 90 degrees to the left" <<
@@ -245,4 +272,33 @@ void toLowerCase(const string& str){
         if(c >= 'A' && c <= 'Z')
             c += 32;
     }
+}
+
+bool isInVector(const string& element, const vector<string>& vect){
+    return std::find(vect.begin(), vect.end(), element) != vect.end();
+}
+
+const vector<string> getValidPicturePaths(const vector<string>& picturePaths){
+    vector<string> validPicturePaths;
+    for(string path : picturePaths){
+        if(!isValidFilename(path)){
+            std::cout << "\nInvalid filename for: " << path << '\n';
+            continue;
+        }
+        if(!isInNetpbmFormat(path)){
+            std::cout << "\nInvalid format for: " << path << " Only .pbm, .pgm and .ppm are supported.\n";
+            continue;
+        }
+        validPicturePaths.push_back(path);
+    }
+    return validPicturePaths;
+}
+
+bool isInNetpbmFormat(const string& imageName){
+    string imageExtension = imageName.substr(imageName.rfind('.') + 1);
+    return imageExtension == "pbm" || imageExtension == "pgm" || imageExtension == "ppm";
+}
+
+bool isValidFilename(const string& filename){
+    return filename.find('.') != string::npos;
 }

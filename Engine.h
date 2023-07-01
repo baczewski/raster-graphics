@@ -1,15 +1,26 @@
 #pragma once
 
 #include <sstream>
+#include <algorithm>
 
 #include "Session.h"
 
 class Engine{
 private:
+
+    static Engine* instance;
+
     static vector<Session> sessions;
     static Session* currentSession;
+    static const vector<string> commands;
+    Engine() = default;
 
+    Engine(const Engine&) = delete;
+    Engine& operator=(const Engine&) = delete;
 public:
+
+    static Engine* getInstance();
+
     static void addNewSession(const vector<string>& imagesPaths);
     static void switchTo(int sessionId);
 
