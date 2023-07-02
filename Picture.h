@@ -48,6 +48,7 @@ private:
 public:
 
     Picture(const string& filename);
+    Picture(const Picture& other);
     ~Picture();
 
     void addTransformation(const string& transformation);
@@ -60,7 +61,7 @@ public:
     const string& getName() const;
 
     void print() const;
-    void save() const;
+    void save(const string& filePath) const;
 };
 
 

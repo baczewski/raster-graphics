@@ -14,11 +14,6 @@ Picture::Picture(const string& filename) {
         // Create a file stream object
         std::ifstream file(filename);
 
-        // Check if the file stream object is already open
-        if (file.is_open()) {
-            throw std::invalid_argument("File is already open.");
-        }
-
         // Check if the file stream object is in a good state
         if (!file.good()) {
             throw std::invalid_argument("File is not in a good state.");
@@ -71,7 +66,16 @@ Picture::Picture(const string& filename) {
         break;
     }
 }
-    
+
+Picture::Picture(const Picture& other) {
+    this->name = other.name;
+    this->type = other.type;
+    this->size = other.size;
+    this->maxValue = other.maxValue;
+    this->pixels = other.getPixels();
+    this->transformations = other.transformations;
+}
+
 Picture::~Picture() {
     if (type != Type::Invalid) {
         for (auto rowIt = pixels.begin(); rowIt != pixels.end(); ++rowIt) {
@@ -214,7 +218,7 @@ void Picture::clearTransformations() {
 }
 
 bool Picture::isComment(const string& line) const {
-    return line[0] == ' ';
+    return line[0] == '#';
 }
 
 const string& Picture::typeToString() const {
@@ -275,14 +279,14 @@ void Picture::print() const {
     }
 }
 
-void Picture::save() const {
+void Picture::save(const string& filePath = "") const {
 
     if(type == Type::Invalid){
         cerr << "Picture: " << name << " has invalid type and will not be saved!." << '\n';
         return;
     }
 
-    string newName = name + DateTime::getDateTime();
+    string newName = filePath + name + DateTime::getDateTime();
 
     if (std::filesystem::exists(newName)) {
         cerr << "File already exists!" << '\n';
@@ -293,11 +297,6 @@ void Picture::save() const {
 
     try
     {
-        if (!file.is_open())
-        {
-            throw std::invalid_argument("Failed to open file.");
-        }
-
         if (!file.good())
         {
             throw std::invalid_argument("File is not in a good state.");
