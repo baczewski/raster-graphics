@@ -271,6 +271,10 @@ const string& Picture::getName() const {
     return name;
 }
 
+const short Picture::getMaxValue() const {
+    return maxValue;
+}
+
 void Picture::print() const {
     for(vector<Pixel*> row : pixels) {
         for(Pixel* pixel : row) {

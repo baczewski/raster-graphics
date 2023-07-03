@@ -63,6 +63,7 @@ public:
     vector<string> getTransformations() const;
     const Type& getType() const;
     const string& getName() const;
+    const short getMaxValue() const;
 
     void print() const;
     void save(const string& filePath) const;
