@@ -15,7 +15,7 @@ using std::string;
 using std::ifstream;
 using std::cerr;
 
-enum class Type {
+enum Type {
     Invalid,
     P1,
     P2,
