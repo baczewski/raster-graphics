@@ -5,6 +5,7 @@ bool canBeApplied(const string&, const Picture&);
 unsigned Session::IDCounter = 0;
 
 Session::Session(const vector<string>& picturePaths){
+    // create pictures from paths and add them to session
     for(int i = 0; i < picturePaths.size(); ++i){
         Picture newPicture(picturePaths[i]);
         sessionPictures.push_back(newPicture);
@@ -33,13 +34,7 @@ void Session::applyTransformationsToPictures(){
 
 void Session::addNewPictures(const vector<string>& picturePaths){
     for(int i = 0; i < picturePaths.size(); ++i){
-        // Picture newPicture;
-        // try{
-            Picture newPicture(picturePaths[i]);
-        // }catch(...){
-            // std::cout << "\nInvalid image, won't be added to the session!\n";
-            // return;
-        // }
+        Picture newPicture(picturePaths[i]);
         sessionPictures.push_back(newPicture);
     }
 }
@@ -104,6 +99,7 @@ void Session::clearPicturesTransformations(){
     }
 }
 
+// check if the filter can be applied on this type of picture
 bool canBeApplied(const string& transformation, const Picture& picture){
     if(transformation == "greyscale" && picture.getType() != Type::P3){
         return false;
