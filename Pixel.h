@@ -13,6 +13,7 @@ public:
   virtual void print() const = 0; // Pure virtual function
 
   virtual std::vector<unsigned char> getPixel() const = 0; // Pure virtual function
+  virtual Pixel* clone() const = 0;
   
   virtual ~Pixel() {} // Virtual destructor
 
@@ -37,6 +38,8 @@ public:
 
   void print() const override;
   std::vector<unsigned char> getPixel() const override;
+  RGBPixel* clone() const override;
+
   std::ostream& operator<<(std::ostream& os) const override;
 };
 
@@ -51,6 +54,8 @@ public:
 
   void print() const override;
   std::vector<unsigned char> getPixel() const override;
+  GrayPixel* clone() const override;
+  
   std::ostream& operator<<(std::ostream& os) const override;
 };
 
@@ -65,5 +70,7 @@ public:
 
   void print() const override;
   std::vector<unsigned char> getPixel() const override;
+  BWPixel* clone() const override;
+  
   std::ostream& operator<<(std::ostream& os) const override;
 };
