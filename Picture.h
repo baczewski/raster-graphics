@@ -6,6 +6,10 @@
 #include <stdexcept>
 #include <sstream>
 #include <chrono>
+#include <filesystem>
+#include <cassert>
+#include <iterator>
+
 using std::vector;
 using std::string;
 using std::ifstream;
@@ -44,7 +48,7 @@ private:
     bool isComment(const string& line) const;
     const string& typeToString() const;
 
-    void executeTransformations();
+    // void executeTransformations();
 public:
 
     Picture(const string& filename);
