@@ -221,6 +221,35 @@ private:
     }
 
 public:
+    static void crop(std::vector<std::vector<Pixel*>>& pixels, int x, int y, int width, int height)
+    {
+        int rows = pixels.size();
+        int columns = pixels[0].size();
+
+        if (x + width > rows || y + height > columns)
+        {
+            std::cout << "Crop impossible, it\'s outside the image." << std::endl;
+            return;
+        }
+
+        std::vector<std::vector<Pixel*>> temp;
+
+        for (int i = y; i < height + y; i++)
+        {
+            std::vector<Pixel*> currentRow;
+
+            for (int j = x; j < width + x; j++)
+            {
+                currentRow.push_back(pixels[i][j]->clone());
+            }
+
+            temp.push_back(currentRow);
+        }
+
+        pixels = temp;
+    }
+
+public:
     static bool transform(std::vector<std::string>& transform, std::vector<std::vector<Pixel*>>& pixels, const Type& picType, const short maxValue)
     {
         std::cout << "Enter transform: ";
