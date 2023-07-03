@@ -60,9 +60,10 @@ public:
     void clearTransformations();
 
     vector<vector<Pixel*>> getPixels() const;
-    vector<string> getTransformations() const;
+    vector<string>& getTransformations();
     const Type& getType() const;
     const string& getName() const;
+    const short getMaxValue() const;
 
     void print() const;
     void save(const string& filePath) const;

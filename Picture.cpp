@@ -259,7 +259,7 @@ vector<vector<Pixel*>> Picture::getPixels() const {
     return copyPixels;
 }
 
-vector<string> Picture::getTransformations() const {
+vector<string>& Picture::getTransformations() {
     return transformations;
 }
 
@@ -269,6 +269,10 @@ const Type& Picture::getType() const {
 
 const string& Picture::getName() const {
     return name;
+}
+
+const short Picture::getMaxValue() const {
+    return maxValue;
 }
 
 void Picture::print() const {
