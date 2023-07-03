@@ -259,7 +259,7 @@ vector<vector<Pixel*>> Picture::getPixels() const {
     return copyPixels;
 }
 
-vector<string> Picture::getTransformations() const {
+vector<string>& Picture::getTransformations() {
     return transformations;
 }
 

@@ -28,7 +28,9 @@ void Session::addTransformationInfoToPictures(const string& newTransformation){
 
 void Session::applyTransformationsToPictures(){
     for(Picture picture : sessionPictures){
-        if (Transformation::transform(picture.getTransformations(), picture.getPixels(), picture.getType(), picture.getMaxValue()))
+        auto pixels = picture.getPixels();
+
+        if (Transformation::transform(picture.getTransformations(), pixels, picture.getType(), picture.getMaxValue()))
         {
             picture.save("");
             picture.clearTransformations();
@@ -90,7 +92,7 @@ void Session::savePictures(const string& path){
     clearPicturesTransformations();
 }
 
-const string& Session::getSessionInfo() const{
+const string Session::getSessionInfo() const {
     string infoText = "Name of images in session: "; 
     for(Picture picture : sessionPictures){
         infoText += picture.getName() + " ";

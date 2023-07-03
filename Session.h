@@ -23,5 +23,5 @@ public:
     void savePictures(const string& path);
     void clearPicturesTransformations();
 
-    const string& getSessionInfo() const;
+    const string getSessionInfo() const;
 };
