@@ -23,13 +23,12 @@ Picture::Picture(const string& filename) {
         cerr << e.what() << '\n';
         return;
     }
-  
     // Open the file
     std::ifstream file(filename);
     string line;
 
     getline(file, line);
-    setType(line);
+    type = setType(line);
     if (type == Type::Invalid) {
         cerr << "Invalid type" << '\n';
         return;
@@ -256,6 +255,8 @@ vector<vector<Pixel*>> Picture::getPixels() const {
         }
         copyPixels.push_back(copyRow);
     }
+
+    return copyPixels;
 }
 
 vector<string> Picture::getTransformations() const {
