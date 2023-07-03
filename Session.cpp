@@ -27,6 +27,7 @@ void Session::addTransformationInfoToPictures(const string& newTransformation){
 }
 
 void Session::applyTransformationsToPictures(){
+    std::cout << sessionPictures.size();
     for(Picture picture : sessionPictures){
         auto pixels = picture.getPixels();
 

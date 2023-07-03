@@ -66,14 +66,14 @@ void Engine::callCommand(){
     else if(command[0] == "exit"){
         Commands::exit(command);
     }
-    else if(command[0] != "help" && 
-            command[0] != "load" &&  
-            isInVector(command[0], commands)){
-                if(currentSession == nullptr){
-                    std::cout << "\nError! You must load a session first!\n";
-                    return;
-                }
-    }
+    // else if(command[0] != "help" && 
+    //         command[0] != "load" &&  
+    //         isInVector(command[0], commands)){
+    //             if(currentSession == nullptr){
+    //                 std::cout << "\nError! You must load a session first!\n";
+    //                 return;
+    //             }
+    // }
     else if(command[0] == "save"){
         Commands::savePictures(command);
     }
