@@ -15,6 +15,7 @@ bool isInNetpbmFormat(const string&);
 bool isValidFilename(const string&);
 
 Engine* Engine::getInstance(){
+  // make sure only one instance of the class is created
     if(instance == nullptr){
         instance = new Engine();
     }
@@ -182,6 +183,7 @@ void Engine::Commands::flipPictures(vector<string> command){
             std::cout << "\nUnrecognized command! Do you mean 'flip horizontal/vertical'?\n";
             return;
         }
+        // the command if formed of the words 'flip' + 'horizontal'/'vertical' 
         string transformation = command[0] + " " + command[1];
         currentSession->addTransformationInfoToPictures(transformation);
 }
@@ -191,6 +193,7 @@ void Engine::Commands::rotatePictures(vector<string> command){
         std::cout << "\nUnrecognized command! Do you mean 'rotate right/left'?\n";
         return;
     }
+    // the command consists of 'rotate' + 'right'/'left' 
     string transformation = command[0] + " " + command[1];
     currentSession->addTransformationInfoToPictures(transformation);
 }
@@ -200,6 +203,7 @@ void Engine::Commands::cropPictures(vector<string> command){
         std::cout << "\nInvalid parameters for crop command! You should specify coordinates, width and height\n";
         return;
     }
+  // the parameters of crop function are added to the command string
     string cropWithParams = command[0] + " " + command[1] + " " + command[2] + " " + command[3] + " " + command[4];
     std::cout << cropWithParams << std::endl;
     currentSession->addTransformationInfoToPictures(cropWithParams);
@@ -279,6 +283,7 @@ bool isInVector(const string& element, const vector<string>& vect){
 }
 
 const vector<string> getValidPicturePaths(const vector<string>& picturePaths){
+  // extract only the valid picture paths
     vector<string> validPicturePaths;
     for(string path : picturePaths){
         if(!isValidFilename(path)){
