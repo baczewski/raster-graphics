@@ -6,7 +6,6 @@ const vector<string> Engine::commands = vector<string>{"help", "save", "saveas",
                                                         "monochrome", "grayscale", "negative", "rotate", 
                                                         "flip", "undo", "crop", "session info", "exit"};
 
-
 void tokenizeCommand(vector<string>&, const std::string&);
 void toLowerCase(const string&);
 bool isInVector(const string&, const vector<string>&);
