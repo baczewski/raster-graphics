@@ -10,9 +10,8 @@ protected:
   static const unsigned char MAX_VALUE;
 
 public:
-  virtual void print() const = 0; // Pure virtual function
-
-  virtual std::vector<unsigned char> getPixel() const = 0; // Pure virtual function
+  virtual void print() const = 0; // Pure virtual functions
+  virtual std::vector<unsigned char> getPixel() const = 0;
   virtual Pixel* clone() const = 0;
   
   virtual ~Pixel() {} // Virtual destructor
