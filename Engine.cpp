@@ -24,7 +24,7 @@ Engine* Engine::getInstance(){
 void Engine::addNewSession(const vector<string>& picturePaths){
     Session newSession(picturePaths);
     sessions.push_back(newSession);
-    currentSession = &newSession;
+    currentSession = &sessions[sessions.size()-1];
 } 
 
 void Engine::switchTo(int sessionID){
