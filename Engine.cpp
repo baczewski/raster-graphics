@@ -126,7 +126,7 @@ void Engine::Commands::savePictures(vector<string> command){
         std::cout << "\nInvalid command! If you are trying to specify path, choose 'saveas'\n";
         return;
     }
-    currentSession->optimizeTransformations();
+    // currentSession->optimizeTransformations();
     currentSession->applyTransformationsToPictures();
     currentSession->savePictures("");
 }
@@ -250,7 +250,7 @@ void Engine::Commands::help(vector<string> command){
     "lip vertical - flips the images from the current session vertically\n" <<
     "crop <x> <y> <width> <height> - crops the current image from the specified\n" <<
     "top left corner (x,y) to the specified width and height\n" <<
-    "undo - reverts the last change to the current image\n" <<
+    "undo - revert the last change to the current image\n" <<
     "session info - prints the information about the current session\n"
     "exit - exits the program\n";
 }

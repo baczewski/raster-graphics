@@ -86,6 +86,7 @@ private:
 
     static void horizontal(std::vector<std::vector<Pixel*>>& pixels)
     {
+        std::cout << "horizontal" << std::endl;
         int rows = pixels.size();
         int columns = pixels[0].size();
 
@@ -271,19 +272,19 @@ public:
         {
             std::string transformation = transform[i];
 
-            if (transformation == "left")
+            if (transformation == "rotate left")
             {
                 Transformation::left(pixels);
             }
-            else if (transformation == "right")
+            else if (transformation == "rotate right")
             {
                 Transformation::right(pixels);
             }
-            else if (transformation == "vertical")
+            else if (transformation == "flip vertical")
             {
                 Transformation::vertical(pixels);
             }
-            else if (transformation == "horizontal")
+            else if (transformation == "flip horizontal")
             {
                 Transformation::horizontal(pixels);
             }
@@ -298,6 +299,23 @@ public:
             else if (transformation == "grayscale")
             {
                 Transformation::grayscale(pixels, maxValue, picType);
+            }
+            else if (transformation.find("crop")) {
+                std::istringstream iss(transformation);
+                std::vector<std::string> cropParams;
+                std::string word;
+
+                while (std::getline(iss, word, ' '))
+                {
+                    cropParams.push_back(word);
+                }
+
+                int x = std::stoi(cropParams[1]);
+                int y = std::stoi(cropParams[2]);
+                int width = std::stoi(cropParams[3]);
+                int height = std::stoi(cropParams[4]);
+
+                Transformation::crop(pixels, x, y, width, height);
             }
         }
 

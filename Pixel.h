@@ -16,10 +16,7 @@ public:
   
   virtual ~Pixel() {} // Virtual destructor
 
-  virtual std::ostream& operator<<(std::ostream& os) const {
-    print();
-    return os;
-  }
+  virtual void write(std::ofstream& os) const = 0;
 };
 
 class RGBPixel : public Pixel {
@@ -39,7 +36,7 @@ public:
   std::vector<unsigned char> getPixel() const override;
   RGBPixel* clone() const override;
 
-  std::ostream& operator<<(std::ostream& os) const override;
+  void write(std::ofstream& os) const override;
 };
 
 class GrayPixel : public Pixel {
@@ -55,7 +52,7 @@ public:
   std::vector<unsigned char> getPixel() const override;
   GrayPixel* clone() const override;
   
-  std::ostream& operator<<(std::ostream& os) const override;
+  void write(std::ofstream& os) const override;
 };
 
 class BWPixel : public Pixel {
@@ -71,5 +68,5 @@ public:
   std::vector<unsigned char> getPixel() const override;
   BWPixel* clone() const override;
   
-  std::ostream& operator<<(std::ostream& os) const override;
+  void write(std::ofstream& os) const override;
 };

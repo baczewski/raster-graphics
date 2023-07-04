@@ -19,7 +19,7 @@ unsigned Session::getID() const{
 
 void Session::addTransformationInfoToPictures(const string& newTransformation){
     this->sessionTransformations.push_back(newTransformation);
-    for(Picture picture : sessionPictures){
+    for(Picture& picture : sessionPictures){
         if(canBeApplied(newTransformation, picture)){
             picture.addTransformation(newTransformation);
         }
@@ -27,11 +27,9 @@ void Session::addTransformationInfoToPictures(const string& newTransformation){
 }
 
 void Session::applyTransformationsToPictures(){
-    std::cout << sessionPictures.size();
-    for(Picture picture : sessionPictures){
-        auto pixels = picture.getPixels();
+    for(Picture& picture : sessionPictures){
 
-        if (Transformation::transform(picture.getTransformations(), pixels, picture.getType(), picture.getMaxValue()))
+        if (Transformation::transform(picture.getTransformations(), picture.getPixels(), picture.getType(), picture.getMaxValue()))
         {
             picture.save("");
             picture.clearTransformations();
@@ -97,20 +95,19 @@ void Session::savePictures(const string& path){
 }
 
 const string Session::getSessionInfo() const {
-    string infoText = "Name of images in session: "; 
-    for(Picture picture : sessionPictures){
-        infoText += picture.getName() + " ";
+    string info = "";
+  for(Picture picture : sessionPictures){
+    info += picture.getName() + "\n" + "Transformations: " + "\n";
+    for(string transformation : picture.getTransformations()){
+      info += '\t' + transformation + "\n";
     }
-    infoText += "\nTransformations: ";
-    for(string transformation : sessionTransformations){
-        infoText += transformation;
-    }
-    infoText += '\n';
-    return infoText;
+    info += "---------------------------------\n";
+  }
+    return info;
 }
 
 void Session::clearPicturesTransformations(){
-    for(Picture picture : sessionPictures){
+    for(Picture& picture : sessionPictures){
         picture.clearTransformations();
     }
 }

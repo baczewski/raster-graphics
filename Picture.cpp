@@ -71,7 +71,13 @@ Picture::Picture(const Picture& other) {
     this->type = other.type;
     this->size = other.size;
     this->maxValue = other.maxValue;
-    this->pixels = other.getPixels();
+    for(vector<Pixel*> row : other.pixels) {
+        vector<Pixel*> copyRow;
+        for(Pixel* pixel : row) {
+            copyRow.push_back(pixel->clone());
+        }
+        pixels.push_back(copyRow);
+    }
     this->transformations = other.transformations;
 }
 
@@ -245,18 +251,19 @@ const string& Picture::DateTime::getDateTime() {
     return dateTimeString;
 }
 
-vector<vector<Pixel*>> Picture::getPixels() const {
+vector<vector<Pixel*>>& Picture::getPixels() {
     // make a copy of the pixels as now if we return pixels it will still point at the same location in memory
-    vector<vector<Pixel*>> copyPixels;
-    for(vector<Pixel*> row : pixels) {
-        vector<Pixel*> copyRow;
-        for(Pixel* pixel : row) {
-            copyRow.push_back(pixel->clone());
-        }
-        copyPixels.push_back(copyRow);
-    }
+    // vector<vector<Pixel*>> copyPixels;
+    // for(vector<Pixel*> row : pixels) {
+    //     vector<Pixel*> copyRow;
+    //     for(Pixel* pixel : row) {
+    //         copyRow.push_back(pixel->clone());
+    //     }
+    //     copyPixels.push_back(copyRow);
+    // }
 
-    return copyPixels;
+    // return copyPixels;
+    return pixels;
 }
 
 vector<string>& Picture::getTransformations() {
@@ -275,6 +282,11 @@ const short Picture::getMaxValue() const {
     return maxValue;
 }
 
+void Picture::setNewSize(const int width, const int height) {
+    size.width = width;
+    size.height = height;
+}
+
 void Picture::print() const {
     for(vector<Pixel*> row : pixels) {
         for(Pixel* pixel : row) {
@@ -291,7 +303,16 @@ void Picture::save(const string& filePath = "") const {
         return;
     }
 
-    string newName = filePath + name + DateTime::getDateTime();
+    string fileName, extension;
+    size_t pos = name.find('.');
+    if(pos != string::npos) {
+        fileName = name.substr(0, pos);
+        extension = name.substr(pos);
+    } else {
+        fileName = name;
+    }
+    
+    string newName = filePath + fileName + DateTime::getDateTime() + extension;
 
     if (std::filesystem::exists(newName)) {
         cerr << "File already exists!" << '\n';
@@ -317,12 +338,12 @@ void Picture::save(const string& filePath = "") const {
     file << typeToString() << '\n';
     file << size.width << " " << size.height << '\n';
     if(type == Type::P2 || type == Type::P3) {
-        file << maxValue << '\n';
+        file << (int)maxValue << '\n';
     }
     
     for(vector<Pixel*> row : pixels) {
         for(Pixel* pixel : row) {
-            file << pixel << ' ';
+            pixel->write(file);
         }
         file << '\n';
     }

@@ -59,11 +59,12 @@ public:
     void undoTransformation();
     void clearTransformations();
 
-    vector<vector<Pixel*>> getPixels() const;
+    vector<vector<Pixel*>>& getPixels();
     vector<string>& getTransformations();
     const Type& getType() const;
     const string& getName() const;
     const short getMaxValue() const;
+    void setNewSize(const int width, const int height);
 
     void print() const;
     void save(const string& filePath) const;

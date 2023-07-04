@@ -68,9 +68,8 @@ RGBPixel* RGBPixel::clone() const {
     return new RGBPixel(*this);
 }
 
-std::ostream& RGBPixel::operator<<(std::ostream& os) const {
+void RGBPixel::write(std::ofstream& os) const {
     os << (int)red << " " << (int)green << " " << (int)blue << " ";
-    return os;
 }
 
 // GrayscalePixel
@@ -109,9 +108,8 @@ GrayPixel* GrayPixel::clone() const {
     return new GrayPixel(*this);
 }
 
-std::ostream& GrayPixel::operator<<(std::ostream& os) const {
+void GrayPixel::write(std::ofstream& os) const {
     os << (int)intensity << " ";
-    return os;
 }
 
 // BWPixel
@@ -130,7 +128,7 @@ void BWPixel::print() const {
 
 std::vector<unsigned char> BWPixel::getPixel() const {
     std::vector<unsigned char> pixel;
-    pixel.push_back(isBlack ? 0 : 255);
+    pixel.push_back(isBlack ? 0 : 1);
     return pixel;
 }
 
@@ -138,7 +136,6 @@ BWPixel* BWPixel::clone() const {
     return new BWPixel(*this);
 }
 
-std::ostream& BWPixel::operator<<(std::ostream& os) const {
+void BWPixel::write(std::ofstream& os) const {
     os << isBlack << " ";
-    return os;
 }
