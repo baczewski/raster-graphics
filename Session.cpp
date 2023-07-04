@@ -83,6 +83,9 @@ void Session::optimizeTransformations(){
 void Session::undoLastTransformation(){
     if(sessionTransformations.size() != 0){
         sessionTransformations.erase(sessionTransformations.end() - 1);
+        for(Picture picture : sessionPictures){
+            picture.undoTransformation();
+        } 
     }
 }
 
