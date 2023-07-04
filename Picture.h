@@ -46,7 +46,7 @@ private:
     void setP3(ifstream& read);
     
     bool isComment(const string& line) const;
-    const string& typeToString() const;
+    const string typeToString() const;
 
     // void executeTransformations();
 public:

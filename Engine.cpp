@@ -239,20 +239,20 @@ void Engine::Commands::help(vector<string> command){
     "load <image1 image2 image3 ...> - creates a new session with the specified images\n" <<
     "save - saves the images at the current directory\n" <<
     "saveas <path> - saves the images at the specified directory\n" <<
-    "add <image1 image2 image3 ...> - adds new pictures to the current session" <<
+    "add <image1 image2 image3 ...> - adds new pictures to the current session\n" <<
     "switch <session ID> - switches to another session\n" <<
-    "grayscale - applies grayscale filter to the images in the current session" <<
-    "monochrome - applies black and white filter to the images in the current session" <<
-    "negative - inverts the colors of the images in the current session" <<
-    "rotate left - rotates the images from the current session 90 degrees to the left" <<
-    "rotate right - rotates the images from the current session 90 degrees to the right" <<
-    "lip horizontal - flips the images from the current session horizontally" <<
-    "lip vertical - flips the images from the current session vertically" <<
+    "grayscale - applies grayscale filter to the images in the current session\n" <<
+    "monochrome - applies black and white filter to the images in the current session\n" <<
+    "negative - inverts the colors of the images in the current session\n" <<
+    "rotate left - rotates the images from the current session 90 degrees to the left\n" <<
+    "rotate right - rotates the images from the current session 90 degrees to the right\n" <<
+    "lip horizontal - flips the images from the current session horizontally\n" <<
+    "lip vertical - flips the images from the current session vertically\n" <<
     "crop <x> <y> <width> <height> - crops the current image from the specified\n" <<
-    "top left corner (x,y) to the specified width and height" <<
-    "undo - undoes the last change to the current image\n" <<
+    "top left corner (x,y) to the specified width and height\n" <<
+    "undo - reverts the last change to the current image\n" <<
     "session info - prints the information about the current session\n"
-    "exit - exits the programme\n";
+    "exit - exits the program\n";
 }
 
 void tokenizeCommand(vector<string>& splitCommand, const string& command){

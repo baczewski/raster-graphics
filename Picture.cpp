@@ -220,7 +220,7 @@ bool Picture::isComment(const string& line) const {
     return line[0] == '#';
 }
 
-const string& Picture::typeToString() const {
+const string Picture::typeToString() const {
     switch(type) {
         case Type::P1:
             return "P1";
