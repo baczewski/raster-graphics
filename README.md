@@ -13,7 +13,6 @@
   - Flip horizontally/vertically
   - Invert colors
   - Crop image
-  - Apply red/blue/green filters
 
 ## Getting Started 🚀
 
